@@ -4,21 +4,33 @@ Fast API Pribus project
 
 ## Directory Structure
 
-    app/
-    │
-    ├── main.py                        # FastAPI entrypoint
-    ├── config.py                      # External API URLs
-    ├── schemas.py                     # Pydantic models
-    ├── utils.py                       # CSV parsing + validation
-    │
-    ├── routes/
-    │   └── bulk_router.py             # /hospitals/bulk endpoint
-    │
-    ├── services/
-    │   ├── bulk_service.py            # Bulk processing workflow
-    │   └── hospital_api_client.py     # External API calls
-    │
-    └── tests/                         # pytest test suite
+Paribus/
+│
+├── app/                                      # Main application package
+│   │
+│   ├── main.py                               # FastAPI entrypoint, loads routes, creates app instance
+│   ├── config.py                             # External API URLs + environment/global config
+│   ├── schemas.py                            # Pydantic models for validations & API responses
+│   ├── utils.py                              # CSV parsing + validation functions
+│   │
+│   ├── routes/                               # All API endpoints grouped logically
+│   │   └── bulk_router.py                    # /hospitals/bulk endpoint router
+│   │
+│   ├── services/                             # Business logic + external API interactions
+│   │   ├── bulk_service.py                   # Bulk creation workflow using async + concurrency
+│   │   └── hospital_api_client.py            # HTTP client for external Hospital Directory API
+│   │
+│   └── __init__.py                           # Makes 'app' a Python package
+│
+├── tests/                                    # Pytest test suite
+│   ├── test_csv_parser.py                    # Tests CSV parsing, header validation, max rows, edge cases
+│   ├── test_bulk_service.py                  # Tests async workflow, success/failure handling, activation logic
+│   └── test_bulk_endpoint.py                 # End-to-end API tests (mocking external API calls)
+│
+├── Dockerfile                                # Docker build instructions to containerize the app
+├── requirements.txt                          # Python package dependencies (FastAPI, httpx, uvicorn, pytest, etc.)
+├── README.md                                 # Project documentation, run instructions, examples
+└── .gitignore
 
 ## CSV Format
 
